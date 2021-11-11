@@ -1,32 +1,26 @@
-myShape = thisComp.layer("").content("Line_Life").content("Path 1").path;
-// ссылка на все точки линии(их должно быть 4)
+// link for property "path"
+myShape = thisComp.layer("symbol_N_points").content("Line_Life").content("Path 1").path;
+// variable array for points coordinate
 pts = myShape.points();
+// other variable for creating path
 inTrans = myShape.inTangents();
 outTrans = myShape.outTangents();
 closed = myShape.isClosed();
 
-// координаты центра ШАРИКА-ИДЕИ
+// the current coordinate of the center ball "shape_idea" 
 niz_Y = thisComp.layer("Shape_Idea").content("Idea").transform.position[1];
 niz_X = thisComp.layer("Shape_Idea").content("Idea").transform.position[0];
 
-pts[0][0] = -540;
-pts[0][1] = 0; 
+pts[0][0] = niz_X;
+pts[0][1] = niz_Y; 
 
-pts[2][0] = time * 60 - 400;
-pts[2][1] = 0;
+pts[1][0] = pts[0][0] + (-1) * niz_X / 2;
+pts[1][1] = pts[0][1] + (-1) * niz_Y / 2;
 
-pts[1][0] = pts[2][0];
-pts[1][1] = pts[2][1];
+pts[2][0] = pts[0][0] + (-1) * niz_X / 4;
+pts[2][1] = pts[0][1] + (-1) * niz_Y / 4;
 
 pts[3][0] = 0;
 pts[3][1] = 0;
-
-niz_Y += thisComp.layer("Shape_Idea").content("Idea").content("Ellipse Path 1").size[1]/2 
-niz_Y += thisComp.layer("Shape_Idea").content("Idea").content("Stroke 1").strokeWidth/2;
-
-if (pts[0][1] <= niz_Y){
-    pts[1][0] = niz_X;    
-    pts[1][1] = niz_Y;    
-}
 
 createPath(pts, inTrans, outTrans, closed);
